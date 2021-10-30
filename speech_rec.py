@@ -22,15 +22,16 @@ def speech_to_txt(rec, mic):
 
     return data
 
+
 while True:
-        rec = speech_to_txt(r, mic)
-        if rec["success"]:
-            print(f"The text spoken is: {rec['transcript']}")
-            print("Do you want to exit..... Say yes or no")
-            ans = speech_to_txt(r, mic)
-            if ans["transcript"] in ["yes", "Yes"]:
-                print("Well you are exiting....")
-            break
-        elif not rec["success"]:
-            continue
+    rec = speech_to_txt(r, mic)
+    if rec["success"]:
+        print(f"The text spoken is: {rec['transcript']}")
+        print("Do you want to exit..... Say yes or no")
+        ans = speech_to_txt(r, mic)
+        if ans["transcript"] in ["yes", "Yes"]:
+            print("Well you are exiting....")
+        break
+    elif not rec["success"]:
         continue
+    continue
