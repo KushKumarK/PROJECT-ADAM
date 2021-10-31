@@ -7,11 +7,10 @@ mic = sr.Microphone()
 
 def speech_to_txt(rec, mic):
     data = {"transcript": "", "success": True}
-    recieved = False
     r.dynamic_energy_threshold = True
     try:
         with mic as source:
-            print("Calibarating.......")
+            print("Calibrating.......")
             r.adjust_for_ambient_noise(source, duration=5)
             print("Speak now...")
             audio = rec.listen(source)
