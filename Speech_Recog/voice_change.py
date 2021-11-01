@@ -3,7 +3,7 @@ from IPython.display import Audio
 from IPython.utils import io
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
-from Real_Time_Voice_Cloning.vocoder import inference as vocoder
+from vocoder import inference as vocoder
 from pathlib import Path
 import numpy as np
 import librosa
