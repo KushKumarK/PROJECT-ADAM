@@ -15,7 +15,7 @@ class VoiceOver:
             i += 1
         return ids
 
-    def speak(self, text):
+    def speak(self, text, path = ""):
         self.convertor.setProperty('voice', self.voice_id)
         self.convertor.say(text)
         self.convertor.runAndWait()
