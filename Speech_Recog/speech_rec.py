@@ -14,7 +14,7 @@ def speech_to_txt(voice):
             voice.speak("Calibrating....")
             r.adjust_for_ambient_noise(source, duration=5)
             voice.speak("Speak now...")
-            audio = rec.listen(source)
+            audio = r.listen(source)
         speech2txt = r.recognize_google(audio)
         data["transcript"] = speech2txt
     except sr.UnknownValueError:
