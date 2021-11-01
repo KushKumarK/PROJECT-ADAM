@@ -1,3 +1,5 @@
+import sys
+sys.path.append("E:\PROJECT-ADAM\PROJECT-ADAM\Speech_Recog\Real_Time_Voice_Cloning")
 from IPython.core.display import display
 from IPython.display import Audio
 from IPython.utils import io
