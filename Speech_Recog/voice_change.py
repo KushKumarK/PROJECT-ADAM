@@ -1,7 +1,6 @@
 import sys
-sys.path.append("E:\PROJECT-ADAM\PROJECT-ADAM\Speech_Recog\Real_Time_Voice_Cloning")
-from IPython.core.display import display
-from IPython.display import Audio
+import sounddevice as sd
+sys.path.append("Speech_Recog/Real_Time_Voice_Cloning")
 from IPython.utils import io
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
@@ -10,20 +9,22 @@ from pathlib import Path
 import numpy as np
 import librosa
 
-encoder_weights = Path("Real_Time_Voice_Cloning/encoder/saved_models/pretrained.pt")
-vocoder_weights = Path("Real_Time_Voice_Cloning/vocoder/saved_models/pretrained/pretrained.pt")
-syn_dir = Path("synthesizer/saved_models/logs-pretrained/taco_pretrained")
-encoder.load_model(encoder_weights)
-synthesizer = Synthesizer(syn_dir)
-vocoder.load_model(vocoder_weights)
-text = "Subscribe to the channel"
-in_fpath = Path("Resources/audio_files_harvard.wav")
-reprocessed_wav = encoder.preprocess_wav(in_fpath)
-original_wav, sampling_rate = librosa.load(in_fpath)
-preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
-embed = encoder.embed_utterance(preprocessed_wav)
-with io.capture_output() as captured:
-    specs = synthesizer.synthesize_spectrograms([text], [embed])
-generated_wav = vocoder.infer_waveform(specs[0])
-generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
-display(Audio(generated_wav, rate=synthesizer.sample_rate))
+
+def voice_change(text, path):
+    encoder_weights = Path("Speech_Recog/Real_Time_Voice_Cloning/encoder/saved_models/pretrained.pt")
+    vocoder_weights = Path("Speech_Recog/Real_Time_Voice_Cloning/vocoder/saved_models/pretrained/pretrained.pt")
+    syn_dir = Path("Speech_Recog/Real_Time_Voice_Cloning/synthesizer/saved_models/pretrained/pretrained.pt")
+    encoder.load_model(encoder_weights)
+    synthesizer = Synthesizer(syn_dir)
+    vocoder.load_model(vocoder_weights)
+    in_fpath = Path(path)
+    reprocessed_wav = encoder.preprocess_wav(in_fpath)
+    original_wav, sampling_rate = librosa.load(in_fpath)
+    preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
+    embed = encoder.embed_utterance(preprocessed_wav)
+    with io.capture_output() as captured:
+        specs = synthesizer.synthesize_spectrograms([text], [embed])
+    generated_wav = vocoder.infer_waveform(specs[0])
+    generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
+    voice_generated = [generated_wav, synthesizer.sample_rate]
+    return voice_generated
