@@ -31,4 +31,5 @@ class Voice_Change:
         generated_wav = vocoder.infer_waveform(specs[0])
         generated_wav = np.pad(generated_wav, (0, self.synthesizer.sample_rate), mode="constant")
         voice_generated = [generated_wav, self.synthesizer.sample_rate]
+        print(voice_generated)
         return voice_generated
