@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./Speech_Recog/Real_Time_Voice_Cloning"
+    ]
+}
